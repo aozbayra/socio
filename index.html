@@ -56,16 +56,16 @@
 		<div class="userHeader">
 		  <img src="img/EmptyAvatar.png" alt="Upload a Picture" rad=>
 		  <p id="userFullnameTextBox"><strong> Full Name </strong></p>
-		  <p id="userUsernameTextBox"> username </p>
-		  </div>
-		  </center>
+		  <p id="userUsernameTextBox"><strong> username </strong></p>
+		</div>
+		</center>
 		  
 		  
 		<center>
 		<div class="userBody">
-		  <p id="userFullnameTextBox"><strong> your SOCIAL INFO INFO </strong></p>
-		  </div>
-		  </center>
+		  <p id="titleTextBox"><strong> your SOCIAL INFO INFO </strong></p>
+		</div>
+		</center>
 		  <div class="app-button" id="syncButton" data-target="matches"> Sync </div>
 		  <div class="app-button" id="logoutButton" data-target="login"> Log Out </div>
 		  
@@ -100,6 +100,8 @@
     <script src="zepto.js"></script>
     <script src="app.min.js"></script>
     <script>
+
+
 		App.controller('login', function (page){
 		
 		//need to check if user is already logged in 
@@ -144,24 +146,31 @@
 		var username = localStorage.getItem("username")
 		
 		$(page)
+		.find('#userUsernameTextBox').text(username)
+		
+		$(page)
 		.find('#logoutButton')
 		.on('click', function() {
 			localStorage.removeItem("username")
 		})
 
-		$(page)
-		.find('#userUsernameTextBox').text(username)
+		
 
 		});
 
 		App.controller('matches', function (page) {
-			//get data from sync and from server and make it into an array list/JSON object
+			var list = []
+			list.push("Joe");
+			list.push("Ali");
+			list.push("Yarkin");
 
-			//create a selectable object
-			setInterval(function() {
-			$('#matcheslist').append('<li>username</li>')
-		}, 1000)
-		})
+			//get data from sync and from server and make it into an array list/JSON object
+			for (var i in list) {
+				var matcheslist = $(page).find('#matcheslist')
+				matcheslist.append('<li>'+list[i]+'</li>')
+			}
+			
+		});
 
 		App.controller('sync', function (page) {
 		});
