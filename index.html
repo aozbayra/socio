@@ -39,12 +39,12 @@
 				<input class="app-input" id="usernamesignupText" placeholder="Username">
 				<input class="app-input" id="passwordsignupText" placeholder="Password">
 				
-				
 				<div class="app-button" id="signUpButton_2" data-target="home"> Sign Up For Socio </div>
 			</div>
 		</div>
 	</div>
-	
+
+
 	<div class="app-page" data-page="home">
 		<div class="app-topbar">
 			<div class="app-title">Your Socio Profile</div>
@@ -68,10 +68,25 @@
 				</center>
 				<div class="app-button" id="syncButton" data-target="matches"> Sync </div>
 				<div class="app-button" id="logoutButton" data-target="login"> Log Out </div>
-
+				<div class="app-button" id="addAccountButton" data-target="add_accounts"> Add Account </div>
 			</div>
 		</div>
 	</div>
+
+	<div class="app-page" data-page="add_accounts">
+		<div class="app-topbar">
+			<div class="app-button left" data-back data-autotitle></div>
+
+			<div class="app-title">Add Your Social Media Accounts</div>
+		</div>
+		<div class="app-content">
+			<div class="app-section">
+				<input class="app-input" id="accountType" placeholder="Company">
+				<input class="app-input" id="accountURL" placeholder="Your URL">
+				<div class="app-button" id="addAccountButton_2"> Add Account </div>
+			</div>
+		</div>
+	</div>	
 
 	<div class="app-page" data-page="sync">
 		<div class="app-topbar">
@@ -128,10 +143,6 @@
 		</div>
 	</div>
 
-
-
-
-
 	<script src="zepto.js"></script>
 	<script src="app.min.js"></script>
 	<script>
@@ -144,13 +155,13 @@
 		//		the home page
 
 		$(page)
-			.find('#loginButton')
-			.on('click', function() {
-				var username = $('#usernameText').val()
-				var password = $('#passwordText').val()
-				alert('Username: ' + username + '\n' + 'Password: ' + password + '\n');
+		.find('#loginButton')
+		.on('click', function() {
+			var username = $('#usernameText').val()
+			var password = $('#passwordText').val()
+			alert('Username: ' + username + '\n' + 'Password: ' + password + '\n');
 
-				loginPOST(username, password, function(response) {
+			loginPOST(username, password, function(response) {
 				if(response === true)	{
 					localStorage.setItem("username", username);	
 					App.load('home');
@@ -159,11 +170,9 @@
 					alert('Incorrect Username or Password')
 					App.load('login');
 				}	
-				});
-
 			});
 
-
+		});
 
 		$(page)
 		.find('#signUpButton')
@@ -205,8 +214,13 @@
 
 	});
 
+	App.controller('add_accounts', function (page) {
+		
+		
+	});
+
 	App.controller('matches', function (page) {
-		var list = []
+		var list = [];
 		list.push("joewatkins");
 		list.push("Ali");
 		list.push("Yarkin");
@@ -214,28 +228,41 @@
 			//get data from sync and from server and make it into an array list/JSON object
 			for (var i in list) {
 				var matcheslist = $(page).find('#matcheslist')
-				matcheslist.append('<div class="app-button" id="listButton">' +list[i]+ '</div>')
-
+				matcheslist.append('<div class="app-button listButton">' +list[i]+ '</div>')
 			}
 
 			$(page)
-			.find('#listButton')
-			.on('click', function() {
-				App.load('profiles')
+			.find('.listButton')
+			.on('click', function(event) {
+				var username = $(event.target)
+				username = username.text()
+				App.load('profiles', {username: username})
+
 			})
 			
 		});
 
-	App.controller('profiles', function (page, username) {
-		username = "yarkinsakuc"
-		getAllUserData(username, function(incoming)	{
-			for (var i in incoming) {
-			var incominglist = $(page).find('#incomingAccounts')
-			incominglist.append('<div class="app-button" id="incomingButton"><a href="' + incoming[i].url + '">' + incoming[i].type + '</a></div>')
-		}
-	} )
 
-		
+	App.controller('profiles', function (page, object) {
+
+		var incoming = {}
+		getAllUserData(object.username, function(incoming)	{
+			alert(incoming)
+
+			if(incoming !== false)
+			{
+				alert(incoming.length)
+				for (var i in incoming) {
+					var incominglist = $(page).find('#incomingAccounts')
+					incominglist.append('<div class="app-button" id="incomingButton"><a href="' + incoming[i].url + '">' + incoming[i].type + '</a></div>')
+				}
+			}
+			else
+			{
+				//bad username go back to matches
+				alert('problem with incoming')
+			}
+		} )
 
 	});
 
@@ -255,25 +282,26 @@
     } catch (err) {
     	App.load('login');
     }  
-	function loginPOST(user, pass, callback)
-	{
-		
-		$.ajax({
-			url: 'http://www.atsocio.com/user_app_login.php',
-			dataType: 'jsonp',
-			data: {username:user, password:pass}, 
-			success: function(data) { 
-				callback(data)
-			},
-			error: function() { 
-				callback(false)
-			}
-		})
-		
-	}
-	
-	function signUpPOST(fullname, email, username, password, callback)
-	{
+
+    function loginPOST(user, pass, callback)
+    {
+
+    	$.ajax({
+    		url: 'http://www.atsocio.com/user_app_login.php',
+    		dataType: 'jsonp',
+    		data: {username:user, password:pass}, 
+    		success: function(data) { 
+    			callback(data)
+    		},
+    		error: function() { 
+    			callback(false)
+    		}
+    	})
+
+    }
+
+    function signUpPOST(fullname, email, username, password, callback)
+    {
 		//do something later
 	}
 
@@ -281,19 +309,20 @@
 	{
 		//get user data
 		$.ajax({
-	    url: 'http://www.atsocio.com/media_user.php',
-	    dataType: 'jsonp',
-	    data: {username:user}, 
-	    success: function(data)	{
-	    	callback(data);
-	    },
-	    error: function()	{
-	    	callback(false)
-	    }
-	})
+			url: 'http://www.atsocio.com/media_user.php',
+			dataType: 'jsonp',
+			data: {username:user}, 
+			success: function(data)	{
+				callback(data);
+			},
+			error: function()	{
+				callback(false)
+			}
+		})
 	}
 
 	</script>
 	
-	</body>
-	</html>
+</body>
+</html>
+
