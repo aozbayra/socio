@@ -61,14 +61,20 @@
 								position:relative; 
 								height:100%; 
 								width:100%; 
-								overflow:hidden}.app-loaded .app-page{display:block}.app-ios-7 .app-page,.app-ios-8 .app-page{box-shadow:0 0 12px rgba(0,0,0,0.2)}.app-topbar{z-index:3000; 
+								overflow:hidden}.app-loaded .app-page{display:block}.app-ios-7 .app-page,.app-ios-8 .app-page{box-shadow:0 0 12px rgba(0,0,0,0.2)}
+								
+								.app-topbar{
+									z-index:3000; 
 									position:relative; 
 									height:44px; 
 									width:100%; 
-									background-color:#000; 
+									background-color:#F78127;
 									color:#FFF; 
 									-webkit-box-shadow:inset 0 0 1px rgba(0,0,0,0.15); 
-									box-shadow:inset 0 0 1px rgba(0,0,0,0.15)}.app-android .app-topbar{height:56px; 
+									box-shadow:inset 0 0 1px rgba(0,0,0,0.15)
+									}
+									
+									.app-android .app-topbar{height:56px; 
 										-webkit-box-shadow:0 1px 5px rgba(0,0,0,0.3); 
 										box-shadow:0 1px 5px rgba(0,0,0,0.3)}.app-topbar .app-button{position:absolute; 
 											bottom:0; 
@@ -96,9 +102,16 @@
 																-moz-transform:translate3d(0,0,0); 
 																-ms-transform:translate3d(0,0,0); 
 																-o-transform:translate3d(0,0,0); 
-																transform:translate3d(0,0,0)}.app-section{position:relative; 
+																transform:translate3d(0,0,0)}
+																
+																
+																.app-section {
+																	position:relative; 
 																	margin:8px; 
-																	border:1px solid #AAA}.app-list{list-style:none}.app-list>li,.app-list>li.app-button{padding-left:20px; 
+																	border:1px solid #AAA
+																	}
+																	
+																	.app-list{list-style:none}.app-list>li,.app-list>li.app-button{padding-left:20px; 
 																		padding-right:8px; 
 																		height:43px; 
 																		border-bottom:1px solid #AAA; 
