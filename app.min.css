@@ -319,6 +319,13 @@ clear:both}.app-page,.app-content{background-color:#efeff4}.app-section,.app-lis
 																						
 																						
 																						.userHeader {
+																						border: 2px white solid;
+																						line-height: 2.2;
+																						}
+																						
+																						
+																						
+																						.app-content {
 																						border: 2px black solid;
 																						line-height: 2.2;
 																						}
@@ -326,7 +333,7 @@ clear:both}.app-page,.app-content{background-color:#efeff4}.app-section,.app-lis
 																						
 																						
 																						.userBody{
-																						border: 2px black solid;
+																						border: 2px white solid;
 																						line-height: 2.2;
 																						margin-top: 20px;
 																						}
@@ -335,7 +342,7 @@ clear:both}.app-page,.app-content{background-color:#efeff4}.app-section,.app-lis
 																						
 																						
 																						.userHeader img {
-																						border: 1px black solid;
+																						border: 1px white solid;
 																						border-radius: 100%;
 																						width: 200px;
 																						height: auto;

@@ -114,8 +114,15 @@
 				var username = $('#usernameText').val()
 				var password = $('#passwordText').val()
 				alert('Username: ' + username + '\n' + 'Password: ' + password + '\n');
-				localStorage.setItem("username", username)	
-				});
+				var validResponse = false;
+				validResponse = loginPOST(username, password, true);
+				if(validResponse === true)	{
+					localStorage.setItem("username", username);	
+				}
+				else	{
+					App.load('login');
+				}
+			});
 
 
 		$(page)
@@ -189,5 +196,34 @@
     	App.load('login');
     }
     </script>
+	<script type="text/javascript">
+	function loginPOST(user, pass, remember)
+	{
+		var url = "http://atsocio.com/user_login.php";
+		var method = "POST";
+		var postBody = "username=" + user + "&" + "password=" + password + "&" + "remember=1a"
+		var xmlhttp = new XMLHttpRequest();
+		var myResponse = null;
+		
+		xmlhttp.onreadystatechange = function()	{
+			if(xmlhttp.readyState == 4 && xmlhttp.status == 200)	{
+				myresponse = xmlhttp.responseText;
+			}
+		}
+		
+		xmlhttp.open(method, url, true);
+		xmlhttp.send();
+		
+		alert(myResponse);
+		
+		if(myResponse !== null)	{
+			return true;
+		}
+		else	{
+			return false;
+		}
+	}
+	</script>
+	
 	</body>
 	</html>
