@@ -207,7 +207,7 @@
 
 	App.controller('matches', function (page) {
 		var list = []
-		list.push("Joe");
+		list.push("joewatkins");
 		list.push("Ali");
 		list.push("Yarkin");
 
@@ -226,17 +226,16 @@
 			
 		});
 
-	App.controller('profiles', function (page) {
-		var incoming = []
-		incoming.push({type:'Linkedin', url:'http://www.linkedin.com'});
-		incoming.push({type:'Facebook', url:'http://www.facebook.com'});
-		incoming.push({type:'Twitter', url:'http://www.twitter.com'});
-		
-
-		for (var i in incoming) {
+	App.controller('profiles', function (page, username) {
+		username = "yarkinsakuc"
+		getAllUserData(username, function(incoming)	{
+			for (var i in incoming) {
 			var incominglist = $(page).find('#incomingAccounts')
 			incominglist.append('<div class="app-button" id="incomingButton"><a href="' + incoming[i].url + '">' + incoming[i].type + '</a></div>')
 		}
+	} )
+
+		
 
 	});
 
@@ -272,6 +271,28 @@
 		})
 		
 	}
+	
+	function signUpPOST(fullname, email, username, password, callback)
+	{
+		//do something later
+	}
+
+	function getAllUserData(user, callback)
+	{
+		//get user data
+		$.ajax({
+	    url: 'http://www.atsocio.com/media_user.php',
+	    dataType: 'jsonp',
+	    data: {username:user}, 
+	    success: function(data)	{
+	    	callback(data);
+	    },
+	    error: function()	{
+	    	callback(false)
+	    }
+	})
+	}
+
 	</script>
 	
 	</body>
