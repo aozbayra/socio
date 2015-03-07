@@ -285,6 +285,7 @@
 	    dataType: 'jsonp',
 	    data: {username:user}, 
 	    success: function(data)	{
+	    	correctAllData(data);
 	    	callback(data);
 	    },
 	    error: function()	{
@@ -293,6 +294,29 @@
 	})
 	}
 
+	function correctAllData(data)
+	{
+		console.log(length = data.length)
+		for(var i in data)
+		{
+			console.log('start url: ' + data[i].url)
+			//remove double slashes
+			if(data[i].url.indexOf('//') === 0)
+			{
+				console.log('before slahes: ' + data[i].url)
+				data[i].url = data[i].url.substring(2);
+				console.log('after slahes: ' + data[i].url)
+
+			}
+			
+			if(data[i].url.toLowerCase().indexOf('.com') > 0)
+			{
+				console.log('its a url')
+				data[i].url = "http://" + data[i].url; 
+				console.log('after url add: ' + data[i].url);
+			}
+		}
+	}
 	</script>
 	
 	</body>
