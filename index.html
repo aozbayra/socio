@@ -56,7 +56,7 @@
 		<div class="userHeader">
 		  <img src="img/EmptyAvatar.png" alt="Upload a Picture" rad=>
 		  <p id="userFullnameTextBox"><strong> Full Name </strong></p>
-		  <p id="userUsernameTextBox"><strong> username </p>
+		  <p id="userUsernameTextBox"> username </p>
 		  </div>
 		  </center>
 		  
@@ -66,9 +66,8 @@
 		  <p id="userFullnameTextBox"><strong> your SOCIAL INFO INFO </strong></p>
 		  </div>
 		  </center>
-		  
-		  
-		  <div class="app-button" id="syncButton" data-target="sync"> Sync </div>
+		  <div class="app-button" id="syncButton" data-target="matches"> Sync </div>
+		  <div class="app-button" id="logoutButton" data-target="login"> Log Out </div>
 		  
         </div>
       </div>
@@ -84,6 +83,20 @@
       </div>
     </div>
 
+    <div class="app-page" data-page="matches">
+    	<div class="app-topbar">
+    		<div class="app-button left" data-back data-autotitle></div>
+    		<div class="app-title">Mathces</div>
+    	</div>
+    	<div class="app-content">
+    		<div class="app-section">
+    			<ul class="app-list" id="matcheslist">
+		  	<li> Item 1 </li>
+		  </ul>
+    		</div>
+    	</div>
+
+
     <script src="zepto.js"></script>
     <script src="app.min.js"></script>
     <script>
@@ -92,7 +105,6 @@
 		//need to check if user is already logged in 
 		// 		if they are then just go straight to 
 		//		the home page
-		
 
 		$(page)
 			.find('#loginButton')
@@ -100,7 +112,9 @@
 				var username = $('#usernameText').val()
 				var password = $('#passwordText').val()
 				alert('Username: ' + username + '\n' + 'Password: ' + password + '\n');
+				localStorage.setItem("username", username)	
 				});
+
 
 		$(page)
 			.find('#signUpButton')
@@ -108,7 +122,8 @@
 				alert('Sign Up Button was Clicked!')});
 		
 		});
-		
+
+
 		App.controller('sign_up', function (page){
 
 		$(page)
@@ -126,20 +141,44 @@
 		App.controller('home', function (page) {
 		
 		var fullname = "First " + "Last"
-		var username = "myusername"
+		var username = localStorage.getItem("username")
 		
-		
+		$(page)
+		.find('#logoutButton')
+		.on('click', function() {
+			localStorage.removeItem("username")
+		})
+
+		$(page)
+		.find('#userUsernameTextBox').text(username)
+
 		});
 
-      App.controller('sync', function (page) {
-      });
+		App.controller('matches', function (page) {
+			//get data from sync and from server and make it into an array list/JSON object
 
-      try {
-        App.load('login');
+			//create a selectable object
+			setInterval(function() {
+			$('#matcheslist').append('<li>username</li>')
+		}, 1000)
+		})
+
+		App.controller('sync', function (page) {
+		});
+
+		try {
+			var username = localStorage.getItem("username")
+
+			if (username != null) {
+				App.load('home');
+			}
+			else {
+				App.load('login');
+			}
         //App.restore();
-      } catch (err) {
-        App.load('login');
-      }
+    } catch (err) {
+    	App.load('login');
+    }
     </script>
-  </body>
-</html>
+	</body>
+	</html>
