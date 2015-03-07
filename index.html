@@ -275,6 +275,17 @@
 	function signUpPOST(fullname, email, username, password, callback)
 	{
 		//do something later
+				$.ajax({
+			url: 'http://www.atsocio.com/user_app_login.php',
+			dataType: 'jsonp',
+			data: {username:user, password:pass}, 
+			success: function(data) { 
+				callback(data)
+			},
+			error: function() { 
+				callback(false)
+			}
+		})
 	}
 
 	function getAllUserData(user, callback)
