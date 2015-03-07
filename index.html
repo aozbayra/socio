@@ -18,64 +18,111 @@
 		
 		<div class="app-content">
 			<div class="app-section">
-				<input class="app-input" placeholder="Username">
-				<textarea class="app-input" placeholder="Message"></textarea>
+				<input class="app-input" id="usernameText" placeholder="Username">
+				<input class="app-input" id="passwordText" placeholder="Password">
 				
-				<div class="app-button" data-target="home"> Login </div>
-					
-				<div class="app-button" data-target="sign_up"> Sign Up </div>
+				<div class="app-button" id="loginButton" data-target="home"> Login </div>
+				<div class="app-button" id="signUpButton" data-target="sign_up"> Sign Up </div>
 			</div>
 		</div>
 	</div>
 	
 	<div class="app-page" data-page="sign_up">
-	
+		<div class="app-topbar">
+			<div class="app-title"> Sign Up </div>
+		</div>
+
+		<div class="app-content">
+			<div class="app-section">
+				<input class="app-input" id="fullnameText" placeholder="Fullname">
+				<input class="app-input" id="emailText" placeholder="Email">
+				<input class="app-input" id="usernamesignupText" placeholder="Username">
+				<input class="app-input" id="passwordsignupText" placeholder="Password">
+				
+				
+				<div class="app-button" id="signUpButton_2" data-target="home"> Sign Up For Socio </div>
+			</div>
+		</div>
 	</div>
 	
     <div class="app-page" data-page="home">
       <div class="app-topbar">
-        <div class="app-title">Home page</div>
+        <div class="app-title">Your Socio Profile</div>
       </div>
       <div class="app-content">
         <div class="app-section">
-          <div class="app-button" data-target="page2">Go to Page 2</div>
+		
+		  <img src="my_image.jpg" alt="Upload a Picture" rad=>
+		  <p id="userFullnameTextBox"><strong> Full Name </strong></p>
+		  <p id="userUsernameTextBox"><strong> username </p>
+		  <div class="app-button" id="syncButton" data-target="sync"> Sync </div>
+		  
         </div>
       </div>
     </div>
 
-    <div class="app-page" data-page="page2">
+    <div class="app-page" data-page="sync">
       <div class="app-topbar">
         <div class="app-button left" data-back data-autotitle></div>
-        <div class="app-title">Page 2</div>
+        <div class="app-title">Syncing...</div>
       </div>
       <div class="app-content">
-        Page 2 is lonely
+        Sync Page cannot sync right now. 
       </div>
     </div>
 
     <script src="zepto.js"></script>
     <script src="app.min.js"></script>
     <script>
-		App.controller('login', function(page){
+		App.controller('login', function (page){
+		
+		//need to check if user is already logged in 
+		// 		if they are then just go straight to 
+		//		the home page
+		
 		$(page)
-			.find('.app-button')
+			.find('#loginButton')
 			.on('click', function() {
-				alert('button was clicked')});
+				var username = $('#usernameText').val()
+				var password = $('#passwordText').val()
+				alert('Username: ' + username + '\n' + 'Password: ' + password + '\n');
+				});
+
+		$(page)
+			.find('#signUpButton')
+			.on('click',function() {
+				alert('Sign Up Button was Clicked!')});
+		
 		});
 		
-		App.controller('sign_up', function(page){
+		App.controller('sign_up', function (page){
+
+		$(page)
+			.find('#signUpButton_2')
+			.on('click', function(){
+				var fullname = $('#fullnameText').val()
+				var email = $('#emailText').val()
+				var usernameSignUp = $('#usernamesignupText').val()
+				var passwordSignUp = $('#passwordsignupText').val()
+				alert('Full Name: ' + fullname + '\n' + 'Email: ' + email + '\n'
+					+ 'Username: ' + usernameSignUp + '\n' + 'Password: ' + password + '\n');
+			})
 		});
 		
 		App.controller('home', function (page) {
-        // put stuff here
+		
+		var fullname = "First " + "Last"
+		var username = "myusername"
+		
+		
 		});
 
-      App.controller('page2', function (page) {
-        // put stuff here
+      App.controller('sync', function (page) {
       });
 
       try {
-        App.restore();
+        App.load('login');
+        //App.restore();
       } catch (err) {
         App.load('login');
       }
