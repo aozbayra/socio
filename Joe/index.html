@@ -18,12 +18,11 @@
 		
 		<div class="app-content">
 			<div class="app-section">
-				<input class="app-input" placeholder="Username">
-				<textarea class="app-input" placeholder="Message"></textarea>
+				<input class="app-input" id="usernameText" placeholder="Username">
+				<input class="app-input" id="passwordText" placeholder="Password">
 				
-				<div class="app-button" data-target="home"> Login </div>
-					
-				<div class="app-button" data-target="sign_up"> Sign Up </div>
+				<div class="app-button" id="loginButton" data-target="home"> Login </div>
+				<div class="app-button" id="signUpButton" data-target="sign_up"> Sign Up </div>
 			</div>
 		</div>
 	</div>
@@ -57,10 +56,16 @@
     <script src="app.min.js"></script>
     <script>
 		App.controller('login', function(page){
+		
 		$(page)
-			.find('.app-button')
+			.find('#loginButton')
 			.on('click', function() {
-				alert('button was clicked')});
+				alert('Login Button was Clicked')});
+		$(page)
+			.find('#signUpButton')
+			.on('click',function() {
+				alert('Sign Up Button was Clicked!')});
+		
 		});
 		
 		App.controller('sign_up', function(page){
@@ -75,7 +80,8 @@
       });
 
       try {
-        App.restore();
+		App.load('login');
+        //App.restore();
       } catch (err) {
         App.load('login');
       }
