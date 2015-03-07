@@ -152,7 +152,6 @@
 
 				loginPOST(username, password, function(response) {
 				if(response === true)	{
-					alert("Logged in successfully")
 					localStorage.setItem("username", username);	
 					App.load('home');
 				}
