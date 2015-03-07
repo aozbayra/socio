@@ -47,22 +47,27 @@
 	
     <div class="app-page" data-page="home">
       <div class="app-topbar">
-        <div class="app-title">Home page</div>
+        <div class="app-title">Your Socio Profile</div>
       </div>
       <div class="app-content">
         <div class="app-section">
-          <div class="app-button" data-target="page2">Go to Page 2</div>
+		
+		  <img src="my_image.jpg" alt="Upload a Picture" rad=>
+		  <p id="userFullnameTextBox"><strong> Full Name </strong></p>
+		  <p id="userUsernameTextBox"><strong> username </p>
+		  <div class="app-button" id="syncButton" data-target="sync"> Sync </div>
+		  
         </div>
       </div>
     </div>
 
-    <div class="app-page" data-page="page2">
+    <div class="app-page" data-page="sync">
       <div class="app-topbar">
         <div class="app-button left" data-back data-autotitle></div>
-        <div class="app-title">Page 2</div>
+        <div class="app-title">Syncing...</div>
       </div>
       <div class="app-content">
-        Page 2 is lonely
+        Sync Page cannot sync right now. 
       </div>
     </div>
 
@@ -70,6 +75,10 @@
     <script src="app.min.js"></script>
     <script>
 		App.controller('login', function (page){
+		
+		//need to check if user is already logged in 
+		// 		if they are then just go straight to 
+		//		the home page
 		
 		$(page)
 			.find('#loginButton')
@@ -101,11 +110,14 @@
 		});
 		
 		App.controller('home', function (page) {
-        // put stuff here
+		
+		var fullname = "First " + "Last"
+		var username = "myusername"
+		
+		
 		});
 
-      App.controller('page2', function (page) {
-        // put stuff here
+      App.controller('sync', function (page) {
       });
 
       try {
