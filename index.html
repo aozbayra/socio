@@ -18,18 +18,31 @@
 		
 		<div class="app-content">
 			<div class="app-section">
-				<input class="app-input" placeholder="Username">
-				<textarea class="app-input" placeholder="Message"></textarea>
+				<input class="app-input" id="usernameText" placeholder="Username">
+				<input class="app-input" id="passwordText" placeholder="Password">
 				
-				<div class="app-button" data-target="home"> Login </div>
-					
-				<div class="app-button" data-target="sign_up"> Sign Up </div>
+				<div class="app-button" id="loginButton" data-target="home"> Login </div>
+				<div class="app-button" id="signUpButton" data-target="sign_up"> Sign Up </div>
 			</div>
 		</div>
 	</div>
 	
 	<div class="app-page" data-page="sign_up">
-	
+		<div class="app-topbar">
+			<div class="app-title"> Sign Up </div>
+		</div>
+
+		<div class="app-content">
+			<div class="app-section">
+				<input class="app-input" id="fullnameText" placeholder="Fullname">
+				<input class="app-input" id="emailText" placeholder="Email">
+				<input class="app-input" id="usernamesignupText" placeholder="Username">
+				<input class="app-input" id="passwordsignupText" placeholder="Password">
+				
+				
+				<div class="app-button" id="signUpButton_2" data-target="home"> Sign Up For Socio </div>
+			</div>
+		</div>
 	</div>
 	
     <div class="app-page" data-page="home">
@@ -56,14 +69,35 @@
     <script src="zepto.js"></script>
     <script src="app.min.js"></script>
     <script>
-		App.controller('login', function(page){
+		App.controller('login', function (page){
+		
 		$(page)
-			.find('.app-button')
+			.find('#loginButton')
 			.on('click', function() {
-				alert('button was clicked')});
+				var username = $('#usernameText').val()
+				var password = $('#passwordText').val()
+				alert('Username: ' + username + '\n' + 'Password: ' + password + '\n');
+				});
+
+		$(page)
+			.find('#signUpButton')
+			.on('click',function() {
+				alert('Sign Up Button was Clicked!')});
+		
 		});
 		
-		App.controller('sign_up', function(page){
+		App.controller('sign_up', function (page){
+
+			$(page)
+			.find('#signUpButton_2')
+			.on('click', function(){
+				var fullname = $('#fullnameText').val()
+				var email = $('#emailText').val()
+				var usernameSignUp = $('#usernamesignupText').val()
+				var passwordSignUp = $('#passwordsignupText').val()
+				alert('Full Name: ' + fullname + '\n' + 'Email: ' + email + '\n'
+					+ 'Username: ' + usernameSignUp + '\n' + 'Password: ' + passwordSignUp + '\n')
+			})
 		});
 		
 		App.controller('home', function (page) {
@@ -75,7 +109,8 @@
       });
 
       try {
-        App.restore();
+        App.load('login');
+        //App.restore();
       } catch (err) {
         App.load('login');
       }
