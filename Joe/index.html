@@ -28,7 +28,21 @@
 	</div>
 	
 	<div class="app-page" data-page="sign_up">
-	
+		<div class="app-topbar">
+			<div class="app-title"> Sign Up </div>
+		</div>
+
+		<div class="app-content">
+			<div class="app-section">
+				<input class="app-input" id="fullnameText" placeholder="Fullname">
+				<input class="app-input" id="emailText" placeholder="Email">
+				<input class="app-input" id="usernamesignupText" placeholder="Username">
+				<input class="app-input" id="passwordsignupText" placeholder="Password">
+				
+				
+				<div class="app-button" id="signUpButton_2" data-target="home"> Sign Up For Socio </div>
+			</div>
+		</div>
 	</div>
 	
     <div class="app-page" data-page="home">
@@ -55,16 +69,14 @@
     <script src="zepto.js"></script>
     <script src="app.min.js"></script>
     <script>
-		App.controller('login', function(page){
+		App.controller('login', function (page){
 		
 		$(page)
 			.find('#loginButton')
 			.on('click', function() {
 				var username = $('#usernameText').val()
 				var password = $('#passwordText').val()
-				alert('Login Button was Clicked')
-				alert('Username: ' + username)
-				alert('Password: ' + password)
+				alert('Username: ' + username + '\n' + 'Password: ' + password + '\n');
 				});
 
 		$(page)
@@ -74,7 +86,18 @@
 		
 		});
 		
-		App.controller('sign_up', function(page){
+		App.controller('sign_up', function (page){
+
+		$(page)
+			.find('#signUpButton_2')
+			.on('click', function(){
+				var fullname = $('#fullnameText').val()
+				var email = $('#emailText').val()
+				var usernameSignUp = $('#usernamesignupText').val()
+				var passwordSignUp = $('#passwordsignupText').val()
+				alert('Full Name: ' + fullname + '\n' + 'Email: ' + email + '\n'
+					+ 'Username: ' + usernameSignUp + '\n' + 'Password: ' + password + '\n');
+			})
 		});
 		
 		App.controller('home', function (page) {
@@ -86,7 +109,7 @@
       });
 
       try {
-		App.load('login');
+        App.load('login');
         //App.restore();
       } catch (err) {
         App.load('login');
