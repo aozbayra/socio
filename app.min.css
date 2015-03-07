@@ -314,3 +314,29 @@ clear:both}.app-page,.app-content{background-color:#efeff4}.app-section,.app-lis
 																					-webkit-background-size:16px 16px; 
 																					background-size:16px 16px}.app-input[type="search"].no-icon,.app-android .app-input[type="search"].no-icon-android,.app-ios .app-input[type="search"].no-icon-ios{padding-left:12px; 
 																						background-image:none}
+																						
+																						
+																						
+																						
+																						.userHeader {
+																						border: 2px black solid;
+																						line-height: 2.2;
+																						}
+																						
+																						
+																						
+																						.userBody{
+																						border: 2px black solid;
+																						line-height: 2.2;
+																						margin-top: 20px;
+																						}
+																						
+																						
+																						
+																						
+																						.userHeader img {
+																						border: 1px black solid;
+																						border-radius: 100%;
+																						width: 200px;
+																						height: auto;
+																						}
