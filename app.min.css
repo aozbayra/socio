@@ -125,14 +125,39 @@
 																				height:24px; 
 																				background-color:#000; 
 																				color:#FFF; 
-																				line-height:24px}.app-list>li+label{margin-top:-1px}.app-content .app-button{margin:0 auto; 
+																				line-height:24px}.app-list>li+label{margin-top:-1px}
+
+
+
+																				.app-content .app-button {
+																					margin:0 auto; 
 																					height:40px; 
 																					border-bottom:1px solid #AAA; 
 																					line-height:40px; 
 																					overflow:hidden; 
 																					text-align:center; 
 																					text-overflow:ellipsis; 
-																					white-space:nowrap}.app-button:last-child{border-bottom:0}.app-content .app-button.green{background-color:#7F7}.app-content .app-button.red{background-color:#F77}.app-content .app-button.blue{background-color:#77F}.app-input{position:relative; 
+																					white-space:nowrap
+
+																					}
+
+
+
+																					.list-button {
+
+																					margin:0 auto; 
+																					height:40px; 
+																					border-bottom:1px solid #AAA; 
+																					line-height:40px; 
+																					overflow:hidden; 
+																					text-align:center; 
+																					text-overflow:ellipsis; 
+																					white-space:nowrap
+
+																					}
+
+
+																					.app-button:last-child{border-bottom:0}.app-content .app-button.green{background-color:#7F7}.app-content .app-button.red{background-color:#F77}.app-content .app-button.blue{background-color:#77F}.app-input{position:relative; 
 																						display:block; 
 																						padding:10px 12px; 
 																						width:100%; 
@@ -326,14 +351,14 @@ clear:both}.app-page,.app-content{background-color:#efeff4}.app-section,.app-lis
 																						
 																						
 																						.app-content {
-																						border: 2px black solid;
+																						border: 2px white solid;
 																						line-height: 2.2;
 																						}
 																						
 																						
 																						
 																						.userBody{
-																						border: 2px white solid;
+																						border: 2px black solid;
 																						line-height: 2.2;
 																						margin-top: 20px;
 																						}

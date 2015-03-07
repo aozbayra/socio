@@ -1,16 +1,16 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>Socio</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
-    <link rel="stylesheet" href="app.min.css">
-    <style>
-      /* TODO */
-    </style>
-  </head>
+<head>
+	<title>Socio</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+	<link rel="stylesheet" href="app.min.css">
+	<style>
+	/* TODO */
+	</style>
+</head>
 
-  <body>
-  
+<body>
+
 	<div class="app-page" data-page="login">
 		<div class="app-topbar">
 			<div class="app-title"> Login </div>
@@ -45,65 +45,100 @@
 		</div>
 	</div>
 	
-    <div class="app-page" data-page="home">
-      <div class="app-topbar">
-        <div class="app-title">Your Socio Profile</div>
-      </div>
-      <div class="app-content">
-        <div class="app-section">
-		
-		<center>
-		<div class="userHeader">
-		  <img src="img/EmptyAvatar.png" alt="Upload a Picture" rad=>
-		  <p id="userFullnameTextBox"><strong> Full Name </strong></p>
-		  <p id="userUsernameTextBox"><strong> username </strong></p>
+	<div class="app-page" data-page="home">
+		<div class="app-topbar">
+			<div class="app-title">Your Socio Profile</div>
 		</div>
-		</center>
-		  
-		  
-		<center>
-		<div class="userBody">
-		  <p id="titleTextBox"><strong> your SOCIAL INFO INFO </strong></p>
+		<div class="app-content">
+			<div class="app-section">
+
+				<center>
+					<div class="userHeader">
+						<img src="img/EmptyAvatar.png" alt="Upload a Picture" rad=>
+						<p id="userFullnameTextBox"><strong> Full Name </strong></p>
+						<p id="userUsernameTextBox"><strong> username </strong></p>
+					</div>
+				</center>
+
+
+				<center>
+					<div class="userBody">
+						<p id="titleTextBox"><strong> your SOCIAL INFO INFO </strong></p>
+					</div>
+				</center>
+				<div class="app-button" id="syncButton" data-target="matches"> Sync </div>
+				<div class="app-button" id="logoutButton" data-target="login"> Log Out </div>
+
+			</div>
 		</div>
-		</center>
-		  <div class="app-button" id="syncButton" data-target="matches"> Sync </div>
-		  <div class="app-button" id="logoutButton" data-target="login"> Log Out </div>
-		  
-        </div>
-      </div>
-    </div>
+	</div>
 
-    <div class="app-page" data-page="sync">
-      <div class="app-topbar">
-        <div class="app-button left" data-back data-autotitle></div>
-        <div class="app-title">Syncing...</div>
-      </div>
-      <div class="app-content">
-        Sync Page cannot sync right now. 
-      </div>
-    </div>
+	<div class="app-page" data-page="sync">
+		<div class="app-topbar">
+			<div class="app-button left" data-back data-autotitle></div>
+			<div class="app-title">Syncing...</div>
+		</div>
+		<div class="app-content">
+			Sync Page cannot sync right now. 
+		</div>
+	</div>
 
-    <div class="app-page" data-page="matches">
-    	<div class="app-topbar">
-    		<div class="app-button left" data-back data-autotitle></div>
-    		<div class="app-title">Mathces</div>
-    	</div>
-    	<div class="app-content">
-    		<div class="app-section">
-    			<ul class="app-list" id="matcheslist">
-		  	<li> Item 1 </li>
-		  </ul>
-    		</div>
-    	</div>
+	<div class="app-page" data-page="matches">
+		<div class="app-topbar">
+			<div class="app-button left" data-back data-autotitle></div>
+			<div class="app-title">Mathces</div>
+		</div>
+		<div class="app-content">
+			<div class="app-section">
+				<ul class="app-list" id="matcheslist" data-target='profiles'>
+				</ul>
+			</div>
+		</div>
+	</div>
 
 
-    <script src="zepto.js"></script>
-    <script src="app.min.js"></script>
-    <script>
+
+	<div class="app-page" data-page="profiles">
+		<div class="app-topbar">
+			<div class="app-button left" data-back data-autotitle></div>
+			<div class="app-title">User Profile</div>
+		</div>
+		<div class="app-content">
+			<div class="app-section">
+				<center>
+					<div class="userHeader">
+						<img src="img/EmptyAvatar.png" alt="Upload a Picture" rad=>
+						<p id="userFullnameTextBox"><strong> Full Name </strong></p>
+						<p id="userUsernameTextBox"><strong> username </strong></p>
+					</div>
+				</center>
+				<center>
+					<div class="userBody">
+						<p id="titleTextBox"><strong> INFO </strong></p>
+					</div>
+
+					<ul class="app-list" id="incomingAccounts">
+					</ul>
+
+					<ul class="app-list" id="outgoingAccounts">
+					</ul>
+				</center>
+
+			</div>
+		</div>
+	</div>
 
 
-		App.controller('login', function (page){
-		
+
+
+
+	<script src="zepto.js"></script>
+	<script src="app.min.js"></script>
+	<script>
+
+
+	App.controller('login', function (page){
+
 		//need to check if user is already logged in 
 		// 		if they are then just go straight to 
 		//		the home page
@@ -130,79 +165,98 @@
 			});
 
 
-		$(page)
-			.find('#signUpButton')
-			.on('click',function() {
-				alert('Sign Up Button was Clicked!')});
-		
-		});
-
-
-		App.controller('sign_up', function (page){
 
 		$(page)
-			.find('#signUpButton_2')
-			.on('click', function(){
-				var fullname = $('#fullnameText').val()
-				var email = $('#emailText').val()
-				var usernameSignUp = $('#usernamesignupText').val()
-				var passwordSignUp = $('#passwordsignupText').val()
-				alert('Full Name: ' + fullname + '\n' + 'Email: ' + email + '\n'
-					+ 'Username: ' + usernameSignUp + '\n' + 'Password: ' + passwordSignUp + '\n')
-			})
-		});
+		.find('#signUpButton')
+		.on('click',function() {
+			alert('Sign Up Button was Clicked!')});
 		
-		App.controller('home', function (page) {
-		
+	});
+
+
+	App.controller('sign_up', function (page){
+
+		$(page)
+		.find('#signUpButton_2')
+		.on('click', function(){
+			var fullname = $('#fullnameText').val()
+			var email = $('#emailText').val()
+			var usernameSignUp = $('#usernamesignupText').val()
+			var passwordSignUp = $('#passwordsignupText').val()
+			alert('Full Name: ' + fullname + '\n' + 'Email: ' + email + '\n'
+				+ 'Username: ' + usernameSignUp + '\n' + 'Password: ' + passwordSignUp + '\n')
+		})
+	});
+
+	App.controller('home', function (page) {
+
 		var fullname = "First " + "Last"
 		var username = localStorage.getItem("username")
-		
+
 		$(page)
 		.find('#userUsernameTextBox').text(username)
-		
+
 		$(page)
 		.find('#logoutButton')
 		.on('click', function() {
 			localStorage.removeItem("username")
 		})
 
-		
 
-		});
 
-		App.controller('matches', function (page) {
-			var list = []
-			list.push("Joe");
-			list.push("Ali");
-			list.push("Yarkin");
+	});
+
+	App.controller('matches', function (page) {
+		var list = []
+		list.push("Joe");
+		list.push("Ali");
+		list.push("Yarkin");
 
 			//get data from sync and from server and make it into an array list/JSON object
 			for (var i in list) {
 				var matcheslist = $(page).find('#matcheslist')
-				matcheslist.append('<li>'+list[i]+'</li>')
+				matcheslist.append('<div class="app-button" id="listButton">' +list[i]+ '</div>')
+
 			}
+
+			$(page)
+			.find('#listButton')
+			.on('click', function() {
+				App.load('profiles')
+			})
 			
 		});
 
-		App.controller('sync', function (page) {
-		});
+	App.controller('profiles', function (page) {
+		var incoming = []
+		incoming.push({type:'Linkedin', url:'http://www.linkedin.com'});
+		incoming.push({type:'Facebook', url:'http://www.facebook.com'});
+		incoming.push({type:'Twitter', url:'http://www.twitter.com'});
+		
 
-		try {
-			var username = localStorage.getItem("username")
+		for (var i in incoming) {
+			var incominglist = $(page).find('#incomingAccounts')
+			incominglist.append('<div class="app-button" id="incomingButton"><a href="' + incoming[i].url + '">' + incoming[i].type + '</a></div>')
+		}
 
-			if (username != null) {
-				App.load('home');
-			}
-			else {
-				App.load('login');
-			}
+	});
+
+	App.controller('sync', function (page) {
+	});
+
+	try {
+		var username = localStorage.getItem("username")
+
+		if (username != null) {
+			App.load('home');
+		}
+		else {
+			App.load('login');
+		}
         //App.restore();
     } catch (err) {
     	App.load('login');
-    }
-  
-
-	
+    }  
 	function loginPOST(user, pass, callback)
 	{
 		
