@@ -21,7 +21,7 @@
 				<input class="app-input" id="usernameText" placeholder="Username">
 				<input class="app-input" id="passwordText" placeholder="Password">
 				
-				<div class="app-button" id="loginButton" data-target="home"> Login </div>
+				<div class="app-button" id="loginButton"> Login </div>
 				<div class="app-button" id="signUpButton" data-target="sign_up"> Sign Up </div>
 			</div>
 		</div>
@@ -114,14 +114,19 @@
 				var username = $('#usernameText').val()
 				var password = $('#passwordText').val()
 				alert('Username: ' + username + '\n' + 'Password: ' + password + '\n');
-				var validResponse = false;
-				validResponse = loginPOST(username, password, true);
-				if(validResponse === true)	{
+
+				loginPOST(username, password, function(response) {
+				if(response === true)	{
+					alert("Logged in successfully")
 					localStorage.setItem("username", username);	
+					App.load('home');
 				}
 				else	{
+					alert('Incorrect Username or Password')
 					App.load('login');
-				}
+				}	
+				});
+
 			});
 
 
@@ -195,33 +200,24 @@
     } catch (err) {
     	App.load('login');
     }
-    </script>
-	<script type="text/javascript">
-	function loginPOST(user, pass, remember)
+  
+
+	
+	function loginPOST(user, pass, callback)
 	{
-		var url = "http://atsocio.com/user_login.php";
-		var method = "POST";
-		var postBody = "username=" + user + "&" + "password=" + password + "&" + "remember=1a"
-		var xmlhttp = new XMLHttpRequest();
-		var myResponse = null;
 		
-		xmlhttp.onreadystatechange = function()	{
-			if(xmlhttp.readyState == 4 && xmlhttp.status == 200)	{
-				myresponse = xmlhttp.responseText;
+		$.ajax({
+			url: 'http://www.atsocio.com/user_app_login.php',
+			dataType: 'jsonp',
+			data: {username:user, password:pass}, 
+			success: function(data) { 
+				callback(data)
+			},
+			error: function() { 
+				callback(false)
 			}
-		}
+		})
 		
-		xmlhttp.open(method, url, true);
-		xmlhttp.send();
-		
-		alert(myResponse);
-		
-		if(myResponse !== null)	{
-			return true;
-		}
-		else	{
-			return false;
-		}
 	}
 	</script>
 	
