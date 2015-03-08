@@ -20,7 +20,9 @@
 			<div class="app-section">
 				<input class="app-input" id="usernameText" placeholder="Username">
 				<input class="app-input" id="passwordText" placeholder="Password">
-				
+			</div>
+
+			<div class="app-section">
 				<div class="app-button" id="loginButton"> Login </div>
 				<div class="app-button" id="signUpButton" data-target="sign_up"> Sign Up </div>
 			</div>
@@ -66,7 +68,7 @@
 						<p id="titleTextBox"><strong> your SOCIAL INFO INFO </strong></p>
 					</div>
 				</center>
-				<div class="app-button" id="syncButton" data-target="matches"> Sync </div>
+				<div class="app-button" id="syncButton" > Sync </div>
 				<div class="app-button" id="logoutButton" data-target="login"> Log Out </div>
 				<div class="app-button" id="addAccountButton" data-target="add_accounts"> Add Account </div>
 			</div>
@@ -101,7 +103,7 @@
 	<div class="app-page" data-page="matches">
 		<div class="app-topbar">
 			<div class="app-button left" data-back data-autotitle></div>
-			<div class="app-title">Mathces</div>
+			<div class="app-title">Matches</div>
 		</div>
 		<div class="app-content">
 			<div class="app-section">
@@ -239,6 +241,7 @@
 	App.controller('add_accounts', function (page) {
 		
 		
+		
 	});
 
 	App.controller('matches', function (page, object) {
@@ -338,7 +341,7 @@
     function signUpPOST(fullname, email, user, pass, callback)
     {
 		//do something later
-			$.ajax({
+		$.ajax({
 			url: 'http://www.atsocio.com/user_app_sign_up.php',
 			dataType: 'jsonp',
 			data: {fullname:fullname, email:email, username:user, password:pass}, 
@@ -370,16 +373,16 @@
 	{
 		//get user data
 		$.ajax({
-		    url: 'http://www.atsocio.com/media_user.php',
-		    dataType: 'jsonp',
-		    data: {username:user}, 
-		    success: function(data)	{
-		    	correctAllData(data);
-		    	callback(data);
-		    },
-		    error: function()	{
-		    	callback(false)
-		    }
+			url: 'http://www.atsocio.com/media_user.php',
+			dataType: 'jsonp',
+			data: {username:user}, 
+			success: function(data)	{
+				correctAllData(data);
+				callback(data);
+			},
+			error: function()	{
+				callback(false)
+			}
 		})
 	}
 
@@ -407,6 +410,9 @@
 		}
 	}
 	</script>
+
+	<script src="/socket.io/socket.io.js"></script>
+	<script type="text/javascript" src="findUsers.js"></script>
 	
 </body>
 </html>
