@@ -355,11 +355,11 @@
 		})
 	}
 
-	function addAccountToDB(accountsObject, callback){
+	function addAccountToDB(user, type, url, callback){
 		$.ajax({
 			url: 'http://www.atsocio.com/user_app_add_accounts.php',
 			dataType: 'jsonp',
-			data: accountsObject,
+			data: {username:user, type:type, url:url},
 			success: function(data)	{
 				callback(data)
 			},
