@@ -150,7 +150,7 @@
 	<div class="app-page" data-page="matches">
 		<div class="app-topbar">
 			<div class="app-button left" data-back data-autotitle></div>
-			<div class="app-title">Mathces</div>
+			<div class="app-title">Matches</div>
 		</div>
 		<div class="app-content">
 			<div class="app-section">
@@ -172,7 +172,9 @@
 				<center>
 					<div class="userHeader">
 						<img src="img/EmptyAvatar.png" alt="Upload a Picture" rad=>
+						<!--
 						<p id="userFullnameTextBox"><strong> Full Name </strong></p>
+						-->
 						<p id="userUsernameTextBox"><strong> username </strong></p>
 					</div>
 				</center>
@@ -194,10 +196,6 @@
 
 	<script src="zepto.js"></script>
 	<script src="app.min.js"></script>
-	<!--
-	<script src="scripts/socket.io.js"></script>
-	<script type="text/javascript" src="scripts/findUsers.js"></script>
--->
 <script>
 
 
@@ -220,7 +218,7 @@ App.controller('login', function (page){
 					App.load('home');
 				}
 				else	{
-					//alert('Incorrect Username or Password')
+					alert('Incorrect Username or Password')
 					App.load('login');
 				}	
 			});
@@ -248,20 +246,20 @@ App.controller('sign_up', function (page){
 			//alert('Full Name: ' + fullname + '\n' + 'Email: ' + email + '\n'
 				// + 'Username: ' + usernameSignUp + '\n' + 'Password: ' + passwordSignUp + '\n')
 	
-	signUpPOST(fullname, email, usernameSignUp, passwordSignUp, function(response) {
-		if(response !== false)
-		{
-			localStorage.setItem("username",usernameSignUp);
-			console.log('successful sign up')
-			console.log(response)
-			App.load('home')
-		}
-		else
-		{
-			console.log("failed sign up")
-			console.log(response)
-			App.load('sign_up')
-		}
+		signUpPOST(fullname, email, usernameSignUp, passwordSignUp, function(response) {
+			if(response !== false)
+			{
+				localStorage.setItem("username",usernameSignUp);
+				console.log('successful sign up')
+				console.log(response)
+				App.load('home')
+			}
+			else
+			{
+				console.log("failed sign up")
+				console.log(response)
+				App.load('sign_up')
+			}
 	})
 })
 });
@@ -405,7 +403,7 @@ try {
     	App.load('login');
     }  
 
-
+    /*
     function findUsers(user, noGeo, newUser, endOfSearch){
     	for (var i = 6; i >= 0; i--) {
     		setTimeout(function() {
@@ -416,6 +414,7 @@ try {
     		endOfSearch();
     	}, 8000)
     }
+	*/
 
     function loginPOST(user, pass, callback)
     {
@@ -510,7 +509,8 @@ try {
 		}
 	}
 	</script>
-
+	<script src="/socket.io/socket.io.js"></script>
+	<script type="text/javascript" src="findUsers.js"></script>
 
 
 
