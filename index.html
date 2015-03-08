@@ -251,7 +251,25 @@
 	});
 
 	App.controller('add_accounts', function (page) {
-		
+		$(page)
+		.find('#addAccountButton_2')
+		.on('click', function()	{
+			var username = localStorage.getItem("username")
+			var type = $('#accountType').val()
+			var url = $('#accountURL').val()
+			console.log(username + type + url)
+			addAccountToDB(username, type, url, function(response) {
+				if(response !== false)
+				{
+					alert('You have successfully added ' + type)
+					App.load('home')
+				}
+				else{
+					alert('Failed to Add Account')
+					App.load('add_accounts')
+				}
+			})
+		})
 		
 	});
 
@@ -369,18 +387,22 @@
 		})
 	}
 
-	function addAccountToDB(accountsObject, callback){
+	function addAccountToDB(user, type, url, callback){
+		console.log("begin");
 		$.ajax({
 			url: 'http://www.atsocio.com/user_app_add_accounts.php',
 			dataType: 'jsonp',
-			data: accountsObject,
+			data: {username:user, type:type, url:url},
 			success: function(data)	{
+				console.log('success' + data)
 				callback(data)
 			},
 			error: function() {
+				console.log('failed' + data)
 				callback(false)
 			}
 		})
+		console.log("end");
 	}
 
 	function getAllUserData(user, callback)
