@@ -39,7 +39,7 @@
 				<input class="app-input" id="usernamesignupText" placeholder="Username">
 				<input class="app-input" id="passwordsignupText" placeholder="Password">
 				
-				<div class="app-button" id="signUpButton_2" data-target="home"> Sign Up For Socio </div>
+				<div class="app-button" id="signUpButton_2"> Sign Up For Socio </div>
 			</div>
 		</div>
 	</div>
@@ -193,6 +193,22 @@
 			var passwordSignUp = $('#passwordsignupText').val()
 			alert('Full Name: ' + fullname + '\n' + 'Email: ' + email + '\n'
 				+ 'Username: ' + usernameSignUp + '\n' + 'Password: ' + passwordSignUp + '\n')
+			
+			signUpPOST(fullname, email, usernameSignUp, passwordSignUp, function(response) {
+				if(response !== false)
+				{
+					localStorage.setItem("username",usernameSignUp);
+					console.log('successful sign up')
+					console.log(response)
+					App.load('home')
+				}
+				else
+				{
+					console.log("failed sign up")
+					console.log(response)
+					App.load('sign_up')
+				}
+			})
 		})
 	});
 
@@ -259,7 +275,7 @@
 		getAllUserData(object.username, function(incoming)	{
 			alert(incoming)
 
-			if(incoming !== false)
+			if(incoming !== true)
 			{
 				alert(incoming.length)
 				for (var i in incoming) {
@@ -319,17 +335,32 @@
 
     }
 
-    function signUpPOST(fullname, email, username, password, callback)
+    function signUpPOST(fullname, email, user, pass, callback)
     {
 		//do something later
-				$.ajax({
-			url: 'http://www.atsocio.com/user_app_login.php',
+			$.ajax({
+			url: 'http://www.atsocio.com/user_app_sign_up.php',
 			dataType: 'jsonp',
-			data: {username:user, password:pass}, 
+			data: {fullname:fullname, email:email, username:user, password:pass}, 
 			success: function(data) { 
 				callback(data)
 			},
 			error: function() { 
+				console.log(data)
+				callback(false)
+			}
+		})
+	}
+
+	function addAccountToDB(accountsObject, callback){
+		$.ajax({
+			url: 'http://www.atsocio.com/user_app_add_accounts.php',
+			dataType: 'jsonp',
+			data: accountsObject,
+			success: function(data)	{
+				callback(data)
+			},
+			error: function() {
 				callback(false)
 			}
 		})
@@ -339,18 +370,17 @@
 	{
 		//get user data
 		$.ajax({
-	    url: 'http://www.atsocio.com/media_user.php',
-	    dataType: 'jsonp',
-	    data: {username:user}, 
-	    success: function(data)	{
-	    	correctAllData(data);
-	    	callback(data);
-	    },
-	    error: function()	{
-	    	callback(false)
-	    }
-	})
-
+		    url: 'http://www.atsocio.com/media_user.php',
+		    dataType: 'jsonp',
+		    data: {username:user}, 
+		    success: function(data)	{
+		    	correctAllData(data);
+		    	callback(data);
+		    },
+		    error: function()	{
+		    	callback(false)
+		    }
+		})
 	}
 
 	function correctAllData(data)
