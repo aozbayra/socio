@@ -90,7 +90,40 @@
 		</div>
 		<div class="app-content">
 			<div class="app-section">
-				<input class="app-input" id="accountType" placeholder="Company">
+				<select id="companySelect">
+					<option>Facebook</option> 
+					<option>Twitter</option> 
+					<option>Google+</option> 
+					<option>YouTube</option> 
+					<option>LinkedIn</option> 
+					<option>Pinterest</option> 
+					<option>Tumblr</option>
+					<option>Flickr</option> 
+					<option>Blog</option> 
+					<option>Ello</option> 
+					<option>Yelp</option> 
+					<option>Website</option> 
+					<option>Myspace</option> 
+					<option>Meetup</option> 
+					<option>Vkontakte</option> 
+					<option>Phone Number</option> 
+					<option>Snapchat</option> 
+					<option>Instagram</option> 
+					<option>Vine</option> 
+					<option>Kik</option> 
+					<option>Skype</option> 
+					<option>Tango</option> 
+					<option>Reddit</option> 
+					<option>Vimeo</option> 
+					<option>Evernote</option> 
+					<option>Dribble</option> 
+					<option>Digg</option> 
+					<option>Email</option> 
+					<option>WeChat</option> 
+					<option>StumbleUpon</option> 
+					<option>WhatsApp</option> 
+					<option>Viber"</option>
+				</select>
 				<input class="app-input" id="accountURL" placeholder="Your URL">
 				<div class="app-button" id="addAccountButton_2"> Add Account </div>
 			</div>
@@ -157,11 +190,11 @@
 	<!--
 	<script src="scripts/socket.io.js"></script>
 	<script type="text/javascript" src="scripts/findUsers.js"></script>
-	-->
-	<script>
+-->
+<script>
 
 
-	App.controller('login', function (page){
+App.controller('login', function (page){
 
 		//need to check if user is already logged in 
 		// 		if they are then just go straight to 
@@ -196,88 +229,93 @@
 	});
 
 
-	App.controller('sign_up', function (page){
+App.controller('sign_up', function (page){
 
-		$(page)
-		.find('#signUpButton_2')
-		.on('click', function(){
-			var fullname = $('#fullnameText').val()
-			var email = $('#emailText').val()
-			var usernameSignUp = $('#usernamesignupText').val()
-			var passwordSignUp = $('#passwordsignupText').val()
+	$(page)
+	.find('#signUpButton_2')
+	.on('click', function(){
+		var fullname = $('#fullnameText').val()
+		var email = $('#emailText').val()
+		var usernameSignUp = $('#usernamesignupText').val()
+		var passwordSignUp = $('#passwordsignupText').val()
 			//alert('Full Name: ' + fullname + '\n' + 'Email: ' + email + '\n'
 				// + 'Username: ' + usernameSignUp + '\n' + 'Password: ' + passwordSignUp + '\n')
-			
-			signUpPOST(fullname, email, usernameSignUp, passwordSignUp, function(response) {
-				if(response !== false)
-				{
-					localStorage.setItem("username",usernameSignUp);
-					console.log('successful sign up')
-					console.log(response)
-					App.load('home')
-				}
-				else
-				{
-					console.log("failed sign up")
-					console.log(response)
-					App.load('sign_up')
-				}
-			})
-		})
-	});
+	
+	signUpPOST(fullname, email, usernameSignUp, passwordSignUp, function(response) {
+		if(response !== false)
+		{
+			localStorage.setItem("username",usernameSignUp);
+			console.log('successful sign up')
+			console.log(response)
+			App.load('home')
+		}
+		else
+		{
+			console.log("failed sign up")
+			console.log(response)
+			App.load('sign_up')
+		}
+	})
+})
+});
 
-	App.controller('home', function (page) {
+App.controller('home', function (page) {
 
-		var fullname = "First " + "Last"
+	var fullname = "First " + "Last"
+	var username = localStorage.getItem("username")
+
+	$(page)
+	.find('#userUsernameTextBox').text(username)
+
+	$(page)
+	.find('#logoutButton')
+	.on('click', function() {
+		localStorage.removeItem("username")
+	})
+
+	$(page)
+	.find('#syncButton')
+	.on('click', function() {
+		App.load('matches', {username: username})
+	})
+
+
+
+});
+
+App.controller('add_accounts', function (page) {
+
+	$(page)
+	.find('#addAccountButton_2')
+	.on('click', function()	{
+		//var companyList = $(page).find("companySelect");
+		var x = document.getElementById("companySelect").selectedIndex;
+		var y = document.getElementById("companySelect").options;
 		var username = localStorage.getItem("username")
-
-		$(page)
-		.find('#userUsernameTextBox').text(username)
-
-		$(page)
-		.find('#logoutButton')
-		.on('click', function() {
-			localStorage.removeItem("username")
-		})
-
-		$(page)
-		.find('#syncButton')
-		.on('click', function() {
-			App.load('matches', {username: username})
-		})
-
-
-
-	});
-
-	App.controller('add_accounts', function (page) {
-		$(page)
-		.find('#addAccountButton_2')
-		.on('click', function()	{
-			var username = localStorage.getItem("username")
-			var type = $('#accountType').val()
-			var url = $('#accountURL').val()
-			console.log(username + type + url)
-			addAccountToDB(username, type, url, function(response) {
-				if(response !== false)
-				{
-					alert('You have successfully added ' + type)
-					App.load('home')
-				}
-				else{
-					alert('Failed to Add Account')
-					App.load('add_accounts')
-				}
-			})
-		})
+		var type = y[x].text;
+		var url = $('#accountURL').val()
 		
-	});
+		addAccountToDB(username, type, url, function(response) {
+			if(response !== false)
+			{
+				alert('You have successfully added ' + type)
+				App.load('home')
+			}
+			else{
+				alert('Failed to Add Account')
+				App.load('add_accounts')
+			}
+		})
+	})
 
-	App.controller('matches', function (page, object) {
+});
 
-		var matcheslist = $(page).find('#matcheslist')
 
-		var noGeolocation = function () {
+App.controller('matches', function (page, object) {
+
+	var matcheslist = $(page).find('#matcheslist')
+
+	var noGeolocation = function () {
 			//alert('noGeolocation');
 		}
 		var newUserFound = function(newUser) {
@@ -301,10 +339,10 @@
 	});
 
 
-	App.controller('profiles', function (page, object) {
+App.controller('profiles', function (page, object) {
 
-		var incoming = {}
-		getAllUserData(object.username, function(incoming)	{
+	var incoming = {}
+	getAllUserData(object.username, function(incoming)	{
 			//alert(incoming)
 
 			if(incoming !== true)
@@ -322,26 +360,26 @@
 			}
 		} )
 
-	});
+});
 
-	App.controller('sync', function (page, object) {
-	});
+App.controller('sync', function (page, object) {
+});
 
-	try {
-		var username = localStorage.getItem("username")
+try {
+	var username = localStorage.getItem("username")
 
-		if (username != null) {
-			App.load('home');
-		}
-		else {
-			App.load('login');
-		}
+	if (username != null) {
+		App.load('home');
+	}
+	else {
+		App.load('login');
+	}
         //App.restore();
     } catch (err) {
     	App.load('login');
     }  
 
-    // comment out function when using the server
+
     function findUsers(user, noGeo, newUser, endOfSearch){
     	for (var i = 6; i >= 0; i--) {
     		setTimeout(function() {
@@ -373,7 +411,7 @@
     function signUpPOST(fullname, email, user, pass, callback)
     {
 		//do something later
-			$.ajax({
+		$.ajax({
 			url: 'http://www.atsocio.com/user_app_sign_up.php',
 			dataType: 'jsonp',
 			data: {fullname:fullname, email:email, username:user, password:pass}, 
@@ -409,16 +447,16 @@
 	{
 		//get user data
 		$.ajax({
-		    url: 'http://www.atsocio.com/media_user.php',
-		    dataType: 'jsonp',
-		    data: {username:user}, 
-		    success: function(data)	{
-		    	correctAllData(data);
-		    	callback(data);
-		    },
-		    error: function()	{
-		    	callback(false)
-		    }
+			url: 'http://www.atsocio.com/media_user.php',
+			dataType: 'jsonp',
+			data: {username:user}, 
+			success: function(data)	{
+				correctAllData(data);
+				callback(data);
+			},
+			error: function()	{
+				callback(false)
+			}
 		})
 	}
 
@@ -447,11 +485,15 @@
 	}
 	</script>
 
-	<!-- If you don't want to test with realtime data - remove the following two lines 
-	<script src="/socket.io/socket.io.js"></script>
-	<script type="text/javascript" src="findUsers.js"></script>
-	-->
+
+
+
 </body>
 </html>
+
+	<!--
+	<script src="/socket.io/socket.io.js"></script>
+	<script type="text/javascript" src="findUsers.js"></script>
+-->
 
 
