@@ -64,20 +64,27 @@
 				<center>
 					<div class="userHeader">
 						<img src="img/EmptyAvatar.png" alt="Upload a Picture" rad=>
+						<!-- for another hackathon
 						<p id="userFullnameTextBox"><strong> Full Name </strong></p>
+						-->
 						<p id="userUsernameTextBox"><strong> username </strong></p>
 					</div>
 				</center>
 
 
 				<center>
+				<div class="app-button" id="syncButton" data-target="matches"> Sync </div>
+				<div class="app-button" id="addAccountButton" data-target="add_accounts"> Add Account </div>
+
 					<div class="userBody">
-						<p id="titleTextBox"><strong> your SOCIAL INFO INFO </strong></p>
+						<ul class="app-list" id="yourAccount">
+							
+						</ul>
 					</div>
 				</center>
-				<div class="app-button" id="syncButton" data-target="matches"> Sync </div>
+
 				<div class="app-button" id="logoutButton" data-target="login"> Log Out </div>
-				<div class="app-button" id="addAccountButton" data-target="add_accounts"> Add Account </div>
+				
 			</div>
 		</div>
 	</div>
@@ -264,6 +271,25 @@ App.controller('home', function (page) {
 	var fullname = "First " + "Last"
 	var username = localStorage.getItem("username")
 
+	var incoming = {}
+	getAllUserData(username, function(incoming)	{
+			//alert(incoming)
+
+			if(incoming !== true)
+			{
+				//alert(incoming.length)
+				for (var i in incoming) {
+					var incominglist = $(page).find('#yourAccount')
+					incominglist.append('<div class="app-button" id="yourListButton"><a href="' + incoming[i].url + '">' + incoming[i].type + '</a></div>')
+				}
+			}
+			else
+			{
+				//bad username go back to matches
+				//alert('problem with incoming')
+			}
+		} )
+
 	$(page)
 	.find('#userUsernameTextBox').text(username)
 
@@ -298,7 +324,7 @@ App.controller('add_accounts', function (page) {
 		addAccountToDB(username, type, url, function(response) {
 			if(response !== false)
 			{
-				alert('You have successfully added ' + type)
+				//alert('You have successfully added ' + type)
 				App.load('home')
 			}
 			else{
