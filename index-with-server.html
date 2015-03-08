@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Socio</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+	<link rel="stylesheet" href="app.min.css">
+	<style>
+	/* TODO */
+	</style>
+</head>
+
+<body>
+
+	<div class="app-page" data-page="login">
+		<div class="app-topbar">
+			<div class="app-title"> Login </div>
+		</div>
+		
+		<div class="app-content">
+			<div class="app-section">
+				<input class="app-input" id="usernameText" placeholder="Username">
+				<input class="app-input" id="passwordText" placeholder="Password">
+			</div>
+			<div class="app-section">
+				<div class="app-button" id="loginButton"> Login </div>
+				<div class="app-button" id="signUpButton" data-target="sign_up"> Sign Up </div>
+			</div>
+		</div>
+	</div>
+	
+	<div class="app-page" data-page="sign_up">
+		<div class="app-topbar">
+			<div class="app-title"> Sign Up </div>
+		</div>
+
+		<div class="app-content">
+			<div class="app-section">
+				<input class="app-input" id="fullnameText" placeholder="Fullname">
+				<input class="app-input" id="emailText" placeholder="Email">
+				<input class="app-input" id="usernamesignupText" placeholder="Username">
+				<input class="app-input" id="passwordsignupText" placeholder="Password">
+				
+				<div class="app-button" id="signUpButton_2"> Sign Up For Socio </div>
+			</div>
+		</div>
+	</div>
+
+
+	<div class="app-page" data-page="home">
+		<div class="app-topbar">
+			<div class="app-title">Your Socio Profile</div>
+		</div>
+		<div class="app-content">
+			<div class="app-section">
+
+				<center>
+					<div class="userHeader">
+						<img src="img/EmptyAvatar.png" alt="Upload a Picture" rad=>
+						<p id="userFullnameTextBox"><strong> Full Name </strong></p>
+						<p id="userUsernameTextBox"><strong> username </strong></p>
+					</div>
+				</center>
+
+
+				<center>
+					<div class="userBody">
+						<p id="titleTextBox"><strong> your SOCIAL INFO INFO </strong></p>
+					</div>
+				</center>
+				<div class="app-button" id="syncButton" data-target="matches"> Sync </div>
+				<div class="app-button" id="logoutButton" data-target="login"> Log Out </div>
+				<div class="app-button" id="addAccountButton" data-target="add_accounts"> Add Account </div>
+			</div>
+		</div>
+	</div>
+
+	<div class="app-page" data-page="add_accounts">
+		<div class="app-topbar">
+			<div class="app-button left" data-back data-autotitle></div>
+
+			<div class="app-title">Add Your Social Media Accounts</div>
+		</div>
+		<div class="app-content">
+			<div class="app-section">
+				<input class="app-input" id="accountType" placeholder="Company">
+				<input class="app-input" id="accountURL" placeholder="Your URL">
+				<div class="app-button" id="addAccountButton_2"> Add Account </div>
+			</div>
+		</div>
+	</div>	
+
+	<div class="app-page" data-page="sync">
+		<div class="app-topbar">
+			<div class="app-button left" data-back data-autotitle></div>
+			<div class="app-title">Syncing...</div>
+		</div>
+		<div class="app-content">
+			Synching
+		</div>
+	</div>
+
+	<div class="app-page" data-page="matches">
+		<div class="app-topbar">
+			<div class="app-button left" data-back data-autotitle></div>
+			<div class="app-title">Mathces</div>
+		</div>
+		<div class="app-content">
+			<div class="app-section">
+				<ul class="app-list" id="matcheslist" data-target='profiles'>
+				</ul>
+			</div>
+		</div>
+	</div>
+
+
+
+	<div class="app-page" data-page="profiles">
+		<div class="app-topbar">
+			<div class="app-button left" data-back data-autotitle></div>
+			<div class="app-title">User Profile</div>
+		</div>
+		<div class="app-content">
+			<div class="app-section">
+				<center>
+					<div class="userHeader">
+						<img src="img/EmptyAvatar.png" alt="Upload a Picture" rad=>
+						<p id="userFullnameTextBox"><strong> Full Name </strong></p>
+						<p id="userUsernameTextBox"><strong> username </strong></p>
+					</div>
+				</center>
+				<center>
+					<div class="userBody">
+						<p id="titleTextBox"><strong> INFO </strong></p>
+					</div>
+
+					<ul class="app-list" id="incomingAccounts">
+					</ul>
+
+					<ul class="app-list" id="outgoingAccounts">
+					</ul>
+				</center>
+
+			</div>
+		</div>
+	</div>
+
+	<script src="zepto.js"></script>
+	<script src="app.min.js"></script>
+	<script>
+
+
+	App.controller('login', function (page){
+
+		//need to check if user is already logged in 
+		// 		if they are then just go straight to 
+		//		the home page
+
+		$(page)
+		.find('#loginButton')
+		.on('click', function() {
+			var username = $('#usernameText').val()
+			var password = $('#passwordText').val()
+			alert('Username: ' + username + '\n' + 'Password: ' + password + '\n');
+
+			loginPOST(username, password, function(response) {
+				if(response === true)	{
+					localStorage.setItem("username", username);	
+					App.load('home');
+				}
+				else	{
+					alert('Incorrect Username or Password')
+					App.load('login');
+				}	
+			});
+
+		});
+
+		$(page)
+		.find('#signUpButton')
+		.on('click',function() {
+			alert('Sign Up Button was Clicked!')});
+		
+	});
+
+
+	App.controller('sign_up', function (page){
+
+		$(page)
+		.find('#signUpButton_2')
+		.on('click', function(){
+			var fullname = $('#fullnameText').val()
+			var email = $('#emailText').val()
+			var usernameSignUp = $('#usernamesignupText').val()
+			var passwordSignUp = $('#passwordsignupText').val()
+			alert('Full Name: ' + fullname + '\n' + 'Email: ' + email + '\n'
+				+ 'Username: ' + usernameSignUp + '\n' + 'Password: ' + passwordSignUp + '\n')
+			
+			signUpPOST(fullname, email, usernameSignUp, passwordSignUp, function(response) {
+				if(response !== false)
+				{
+					localStorage.setItem("username",usernameSignUp);
+					console.log('successful sign up')
+					console.log(response)
+					App.load('home')
+				}
+				else
+				{
+					console.log("failed sign up")
+					console.log(response)
+					App.load('sign_up')
+				}
+			})
+		})
+	});
+
+	App.controller('home', function (page) {
+
+		var fullname = "First " + "Last"
+		var username = localStorage.getItem("username")
+
+		$(page)
+		.find('#userUsernameTextBox').text(username)
+
+		$(page)
+		.find('#logoutButton')
+		.on('click', function() {
+			localStorage.removeItem("username")
+		})
+
+		$(page)
+		.find('#syncButton')
+		.on('click', function() {
+			App.load('matches', {username: username})
+		})
+
+
+
+	});
+
+	App.controller('add_accounts', function (page) {
+		
+		
+	});
+
+	App.controller('matches', function (page, object) {
+
+		var matcheslist = $(page).find('#matcheslist')
+
+		var noGeolocation = function () {
+			alert('noGeolocation');
+		}
+		var newUserFound = function(newUser) {
+			var newButton = $('<div class="app-button listButton">' + newUser + '</div>');
+			matcheslist.append(newButton)
+			newButton.on('click', function() {
+				App.load('profiles', {username: newUser})
+			})
+		}
+		var doneSearching = function()	{
+			var reserachBn = $('<div class="app-button">' + 'Search Again' + '</div>')
+			matcheslist.append(reserachBn);
+			reserachBn.on('click', function() {
+				App.load('matches', object);
+			})
+
+		}
+
+		findUsers(object.username, noGeolocation, newUserFound, doneSearching);
+		
+	});
+
+
+	App.controller('profiles', function (page, object) {
+
+		var incoming = {}
+		getAllUserData(object.username, function(incoming)	{
+			alert(incoming)
+
+			if(incoming !== true)
+			{
+				alert(incoming.length)
+				for (var i in incoming) {
+					var incominglist = $(page).find('#incomingAccounts')
+					incominglist.append('<div class="app-button" id="incomingButton"><a href="' + incoming[i].url + '">' + incoming[i].type + '</a></div>')
+				}
+			}
+			else
+			{
+				//bad username go back to matches
+				alert('problem with incoming')
+			}
+		} )
+
+	});
+
+	App.controller('sync', function (page, object) {
+	});
+
+	try {
+		var username = localStorage.getItem("username")
+
+		if (username != null) {
+			App.load('home');
+		}
+		else {
+			App.load('login');
+		}
+        //App.restore();
+    } catch (err) {
+    	App.load('login');
+    }  
+    function findUsers(user, noGeo, newUser, endOfSearch){
+    	for (var i = 6; i >= 0; i--) {
+    		setTimeout(function() {
+    			newUser('example')
+    		}, 1000)
+    	};
+    	setTimeout(function() {
+    		endOfSearch();
+    	}, 8000)
+    }
+    function loginPOST(user, pass, callback)
+    {
+
+    	$.ajax({
+    		url: 'http://www.atsocio.com/user_app_login.php',
+    		dataType: 'jsonp',
+    		data: {username:user, password:pass}, 
+    		success: function(data) { 
+    			callback(data)
+    		},
+    		error: function() { 
+    			callback(false)
+    		}
+    	})
+
+    }
+
+    function signUpPOST(fullname, email, user, pass, callback)
+    {
+		//do something later
+			$.ajax({
+			url: 'http://www.atsocio.com/user_app_sign_up.php',
+			dataType: 'jsonp',
+			data: {fullname:fullname, email:email, username:user, password:pass}, 
+			success: function(data) { 
+				callback(data)
+			},
+			error: function() { 
+				console.log(data)
+				callback(false)
+			}
+		})
+	}
+
+	function addAccountToDB(accountsObject, callback){
+		$.ajax({
+			url: 'http://www.atsocio.com/user_app_add_accounts.php',
+			dataType: 'jsonp',
+			data: accountsObject,
+			success: function(data)	{
+				callback(data)
+			},
+			error: function() {
+				callback(false)
+			}
+		})
+	}
+
+	function getAllUserData(user, callback)
+	{
+		//get user data
+		$.ajax({
+		    url: 'http://www.atsocio.com/media_user.php',
+		    dataType: 'jsonp',
+		    data: {username:user}, 
+		    success: function(data)	{
+		    	correctAllData(data);
+		    	callback(data);
+		    },
+		    error: function()	{
+		    	callback(false)
+		    }
+		})
+	}
+
+	function correctAllData(data)
+	{
+		console.log(length = data.length)
+		for(var i in data)
+		{
+			console.log('start url: ' + data[i].url)
+			//remove double slashes
+			if(data[i].url.indexOf('//') === 0)
+			{
+				console.log('before slahes: ' + data[i].url)
+				data[i].url = data[i].url.substring(2);
+				console.log('after slahes: ' + data[i].url)
+
+			}
+			
+			if(data[i].url.toLowerCase().indexOf('.com') > 0)
+			{
+				console.log('its a url')
+				data[i].url = "http://" + data[i].url; 
+				console.log('after url add: ' + data[i].url);
+			}
+		}
+	}
+	</script>
+
+	<!-- If you don't want to test with realtime data - remove the following two lines -->
+	<script src="/socket.io/socket.io.js"></script>
+	<script type="text/javascript" src="findUsers.js"></script>
+	
+</body>
+</html>
+
+
