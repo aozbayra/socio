@@ -1,0 +1,11 @@
+*.png
+img/SocialMediaIcons/needToBeEditted/still needed.txt
+*.db
+scripts/appjs_add_accounts.js
+scripts/appjs_functions.js
+scripts/appjs_home.js
+scripts/appjs_login.js
+scripts/appjs_sync.js
+scripts/appjs_matches.js
+scripts/appjs_sign_up.js
+scripts/appjs_profiles.js
